@@ -1,0 +1,21 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "python",
+      "interpreter": "(default)",
+      "interpreterArguments": "",
+      "scriptArguments": "runserver",
+      "nativeDebug": false,
+      "webBrowserUrl": "http://127.0.0.1:8000/",
+      "project": "manage.py",
+      "name": "manage.py"
+    },
+    {
+      "type": "native",
+      "name": "F:\\github\\backend_django",
+      "project": ""
+    }
+  ]
+}
