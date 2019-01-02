@@ -4,10 +4,14 @@ from django.db import models
 # Create your models here.
 class Question(models.Model):
     QID=models.CharField(max_length=70)          #题目序号
-    Body=models.TextField()                     #题目内容
+    Body=models.TextField()                     #题面
     Unit=models.CharField(max_length=10)        #题目单元
-    Old=models.CharField(max_length=2)          #是否出现过
-    Number=models.CharField(max_length=70)      #识别号
+    TimeStamp=models.IntegerField(default=0)             #时间戳
+    Answer=models.CharField(max_length=70)      #答案
+    ChoiceA=models.CharField(max_length=70,default='wtxqqq')      #A选项
+    ChoiceB=models.CharField(max_length=70,default='wtxqqq')      #B选项
+    ChoiceC=models.CharField(max_length=70,default='wtxqqq')     #C选项
+    ChoiceD=models.CharField(max_length=70,default='wtxqqq')     #D选项
     def __str__(self):
         return self.Body
     '''

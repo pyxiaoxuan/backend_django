@@ -1,7 +1,7 @@
 from django.db import models
 from .models import Question
-def addSql(_QID,_Body,_Unit,_Old,_Number):  #增
-    Q = Question(QID=_QID,Body=_Body,Unit=_Unit,Old=_Old,Number=_Number)
+def addSql(_QID,_Body,_Unit,_TimeStamp,_Answer,_ChoiceA='NULL',_ChoiceB='NULL',_ChoiceC='NULL',_ChoiceD='NULL'):  #增
+    Q = Question(QID=_QID,Body=_Body,Unit=_Unit,TimeStamp=_TimeStamp,Answer=_Answer,ChoiceA=_ChoiceA,ChoiceB=_ChoiceB,ChoiceC=_ChoiceC,ChoiceD=_ChoiceD)
     Q.save()
     Question.objects.all()      #调试用
 
@@ -10,12 +10,16 @@ def delSql(_QID):                           #删
     Q.delete()
     Question.objects.all()
 
-def modSql(_QID,_Body,_Unit,_Old,_Number):  #改
+def modSql(_QID,_Body,_Unit,_TimeStamp,_Answer,_ChoiceA='',_ChoiceB='',_ChoiceC='',_ChoiceD=''):  #改
     Q = Question.objects.get(QID=_QID)
     Q.Body=_Body
     Q.Unit=_Unit
-    Q.Old=_Old
-    Q.Number=_Number
+    Q.TimeStamp=_TimeStamp
+    Q.Answer=_Answer
+    Q.ChoiceA=_ChoiceA
+    Q.ChoiceB=_ChoiceB
+    Q.ChoiceC=_ChoiceC
+    Q.ChoiceD=_ChoiceD
     Q.save()
     Question.objects.all()
 
