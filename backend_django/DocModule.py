@@ -119,7 +119,7 @@ def addCalculationQ(Cell,Json):
         i+=1
     
 
-def addEssayQ(Cell):
+def addEssayQ(Cell,Json):
     Para=Cell.add_paragraph()
     Run=Para.add_run('四.问答题 ')
     Run.font.name=u'黑体'

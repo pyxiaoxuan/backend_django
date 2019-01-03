@@ -14,8 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf.urls import url,include
+import sys,os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.join(BASE_DIR+'\\backend_django'))
+import backend_django.views
 from django.urls import path
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^$',backend_django.views.home, name='home'),
+    url(r'^manifest.json$',backend_django.views.manifest),
+    url(r'^log.png$',backend_django.views.logo),
 ]

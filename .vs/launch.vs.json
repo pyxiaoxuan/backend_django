@@ -8,7 +8,7 @@
       "interpreterArguments": "",
       "scriptArguments": "runserver",
       "nativeDebug": false,
-      "webBrowserUrl": "http://127.0.0.1:8000/",
+      "webBrowserUrl": "http://127.0.0.1:8000/#/admin",
       "project": "manage.py",
       "name": "manage.py"
     },
@@ -16,6 +16,16 @@
       "type": "native",
       "name": "F:\\github\\backend_django",
       "project": ""
+    },
+    {
+      "type": "native",
+      "name": "manage.py(1)",
+      "project": "manage.py"
+    },
+    {
+      "type": "native",
+      "name": "manage.py(2)",
+      "project": "manage.py"
     }
   ]
 }

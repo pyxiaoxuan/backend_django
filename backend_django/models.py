@@ -3,11 +3,12 @@ from django.db import models
 
 # Create your models here.
 class Question(models.Model):
-    QID=models.CharField(max_length=70)          #题目序号
+    QID=models.CharField(max_length=70,default='wtxqqq')          #题目序号
     Body=models.TextField()                     #题面
-    Unit=models.CharField(max_length=10)        #题目单元
+    Type=models.CharField(max_length=10,default='wtxqqq')        #题目类别
+    Unit=models.CharField(max_length=10,default='wtxqqq')        #题目单元
     TimeStamp=models.IntegerField(default=0)             #时间戳
-    Answer=models.CharField(max_length=70)      #答案
+    Answer=models.CharField(max_length=70,default='wtxqqq')      #答案
     ChoiceA=models.CharField(max_length=70,default='wtxqqq')      #A选项
     ChoiceB=models.CharField(max_length=70,default='wtxqqq')      #B选项
     ChoiceC=models.CharField(max_length=70,default='wtxqqq')     #C选项
