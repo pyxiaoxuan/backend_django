@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\backend_django",
+    "\\backend_django\\migrations",
     "\\django_backend"
   ],
-  "SelectedNode": "\\backend_django\\DocModule.py",
+  "SelectedNode": "\\backend_django\\migrations\\0001_initial.py",
   "PreviewInSolutionExplorer": false
 }
