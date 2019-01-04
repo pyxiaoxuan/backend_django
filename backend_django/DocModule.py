@@ -116,6 +116,8 @@ def addCalculationQ(Cell,Json):
     for Text in Json['Calculation']:
         addPoint(Cell)
         Para=Cell.add_paragraph(str(i)+'.'+Text['Question'])
+        for j in range(0,5)
+            Para=Cell.add_paragraph()
         i+=1
     
 
@@ -131,6 +133,8 @@ def addEssayQ(Cell,Json):
     for Text in Json['Essay']:
         addPoint(Cell)
         Para=Cell.add_paragraph(str(i)+'.'+Text['Question'])
+        for j in range(0,10)
+            Para=Cell.add_paragraph()
         i+=1
     
 

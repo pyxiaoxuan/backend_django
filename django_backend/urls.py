@@ -24,5 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$',backend_django.views.home, name='home'),
     url(r'^manifest.json$',backend_django.views.manifest),
-    url(r'^log.png$',backend_django.views.logo),
+    url(r'^asset-manifest.json$',backend_django.views.asset_manifest),
+    url(r'^request/choice$',backend_django.views.getChoicePost),
 ]
