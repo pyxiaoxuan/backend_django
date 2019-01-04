@@ -166,7 +166,7 @@ def addCompletionA(Cell,Json):
     Para=Cell.add_paragraph()
     i=1
     for Text in Json['Completion']:
-        Run=Para.add_run(str(i)+'.'+Text['Answer'])
+        Run=Para.add_run(str(i)+'.'+Text['Answer']+'.')
         i+=1
 
 

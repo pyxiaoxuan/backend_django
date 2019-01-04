@@ -2,11 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\backend_django",
-    "\\backend_django\\static",
-    "\\backend_django\\static\\js",
-    "\\backend_django\\templates",
     "\\django_backend"
   ],
-  "SelectedNode": "\\manage.py",
+  "SelectedNode": "\\backend_django\\SqlModule.py",
   "PreviewInSolutionExplorer": false
 }
