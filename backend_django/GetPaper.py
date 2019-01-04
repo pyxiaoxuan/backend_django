@@ -5,7 +5,7 @@ import json
 
 DUP_SPAN = 3
 TOTAL_NUM = [10,10,4,5]
-TYPE_LABEL = ["Choice","Completion","Calcution","Essay"]
+TYPE_LABEL = ["Choice","Completion","Calculation","Essay"]
 CurrentTimestamp = 255
 ABType = "B"
 
@@ -17,7 +17,7 @@ def getpaper(threshold = None, cal_unit = None, essay_unit = None):
     if cal_unit is None or not isinstance(cal_unit,list) or len(cal_unit) != 4:
         cal_unit = [1,2,3,4]
     if essay_unit is None or not isinstance(essay_unit,list) or len(essay_unit) != 5:
-        essay_unit = [1,2,3,4,5]
+        essay_unit = [1,2,3,3,6]
     global CurrentTimestamp,ABType
     
     CurrentTimestamp += 1
@@ -147,11 +147,17 @@ def getBody(Type):
     Type = int(Type)
     Q = Question.objects.all()
     Json = []
+    cnt = 0
     for q in Q:
         if Type != int(q.Type):
             continue
+        cnt += 1
         Json.append({"title":cut(q.Body),"id":q.id})
-    return Json
+    ret = [{"num":cnt}]
+    for j in Json:
+        ret.append(j)
+
+    return json.dumps(ret,ensure_ascii=False)
 
 def init():
     Q = Question.objects.all()
@@ -163,4 +169,4 @@ def init():
 #init()
 #getpaper()
 
-#getBody("2")
+#print(getBody("2"))
