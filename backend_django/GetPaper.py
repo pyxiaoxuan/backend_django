@@ -73,12 +73,10 @@ def getpaper(threshold = None, cal_unit = None, essay_unit = None):
         paper[TYPE_LABEL[Type]] = content
 
     #print(paper)
-    paper = json.dumps(paper, ensure_ascii=False)
-    #print(paper)
     return paper
 
 def qryDupQuestion(Type,unit,qid):
-
+    
     Q = Question.objects.all()
     for q in Q:
         if unit != 0 and unit != int(q.Unit):
@@ -153,8 +151,6 @@ def getBody(Type):
         if Type != int(q.Type):
             continue
         Json.append({"title":cut(q.Body),"id":q.id})
-    Json = json.dumps(Json, ensure_ascii=False)
-    #print(Json)
     return Json
 
 def init():
@@ -163,8 +159,8 @@ def init():
         q.TimeStamp = "0"
         q.save()
 
-'''
-init()
-getpaper()
-getBody("2")
-'''
+
+#init()
+#getpaper()
+
+#getBody("2")
