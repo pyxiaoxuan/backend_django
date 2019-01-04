@@ -1,8 +1,6 @@
 from django.db import models
 from backend_django.models import Question
 
-#from .SqlModule import addSql,modSql,delSql
-#from __future__ import division
 import random
 import json
 from datetime import datetime

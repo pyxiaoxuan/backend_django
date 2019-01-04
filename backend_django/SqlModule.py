@@ -1,14 +1,15 @@
 from django.db import models
-from .models import Question
+import sys,os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.join(BASE_DIR+'\\backend_django'))
+from backend_django.models import Question
 def addSql(_QID,_Body,_Type,_Unit,_TimeStamp,_Answer,_ChoiceA='NULL',_ChoiceB='NULL',_ChoiceC='NULL',_ChoiceD='NULL'):  #增
     Q = Question(QID=_QID,Body=_Body,Type=_Type,Unit=_Unit,TimeStamp=_TimeStamp,Answer=_Answer,ChoiceA=_ChoiceA,ChoiceB=_ChoiceB,ChoiceC=_ChoiceC,ChoiceD=_ChoiceD)
     Q.save()
-    Question.objects.all()      #调试用
 
 def delSql(_QID):                           #删
     Q = Question.objects.get(QID=_QID)
     Q.delete()
-    Question.objects.all()
 
 def modSql(_QID,_Body,_Type,_Unit,_TimeStamp,_Answer,_ChoiceA='',_ChoiceB='',_ChoiceC='',_ChoiceD=''):  #改
     Q = Question.objects.get(QID=_QID)
@@ -22,7 +23,6 @@ def modSql(_QID,_Body,_Type,_Unit,_TimeStamp,_Answer,_ChoiceA='',_ChoiceB='',_Ch
     Q.ChoiceC=_ChoiceC
     Q.ChoiceD=_ChoiceD
     Q.save()
-    Question.objects.all()
 
 def srhSql(_QID=-1):                             #查
     if _QID==-1:                                #若缺省则随机查找
