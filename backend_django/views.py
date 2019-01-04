@@ -197,3 +197,7 @@ def getChoiceBody(request):
     Json=GetPaper.getBody('0')
     return HttpResponse(json.dumps(Json), content_type="application/json")
 
+def getDelete(request):
+    ID=request.POST.get('id')
+    SqlModule.delSql(int(ID))
+    return HttpResponse('114514')

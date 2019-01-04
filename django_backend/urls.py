@@ -40,5 +40,5 @@ urlpatterns = [
     url(r'^paper/answer3$',backend_django.views.getA3Get),
     url(r'^time$',backend_django.views.getTimePost),
     url(r'^choice$',backend_django.views.getChoiceBody),
-    #url(r'^delete$',backend_django.views.getQBody),
+    url(r'^delete$',backend_django.views.getDelete),
 ]
