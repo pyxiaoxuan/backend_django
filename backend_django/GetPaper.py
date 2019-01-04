@@ -140,12 +140,30 @@ def ModeltoJson(m):
     else:
         return {"Question":m.Body,"Answer":m.Answer}
 
+CUT_LENGTH = 20
+
+def cut(str):
+    return str[:CUT_LENGTH]
+
+def getBody(Type):
+    Q = Question.objects.all()
+    Json = []
+    for q in Q:
+        if Type != int(q.Type):
+            continue
+        Json.append({"title":cut(q.Body),"id":q.id})
+    Json = json.dumps(Json, ensure_ascii=False)
+    #print(Json)
+    return Json
+
 def init():
     Q = Question.objects.all()
     for q in Q:
         q.TimeStamp = "0"
         q.save()
+
 '''
 init()
 getpaper()
+getBody(2)
 '''
