@@ -1,15 +1,13 @@
 from django.db import models
 from backend_django.models import Question
-
 import random
 import json
-from datetime import datetime
 
 DUP_SPAN = 3
 TOTAL_NUM = [10,10,4,5]
 TYPE_LABEL = ["Choice","Completion","Calcution","Essay"]
-CurrentTimestamp = 1
-ABType = "A"
+CurrentTimestamp = 255
+ABType = "B"
 
 def getpaper(threshold = None, cal_unit = None, essay_unit = None):
 
@@ -22,6 +20,12 @@ def getpaper(threshold = None, cal_unit = None, essay_unit = None):
         essay_unit = [1,2,3,4,5]
     global CurrentTimestamp,ABType
     
+    CurrentTimestamp += 1
+
+    if ABType == "A":
+        ABType = "B"
+    else:
+        ABType = "A"
     #print(threshold)
     #print(cal_unit)
     #print(essay_unit)
@@ -31,10 +35,10 @@ def getpaper(threshold = None, cal_unit = None, essay_unit = None):
     #now = datetime.now().strftime("%Y-%m-%d")
     paper = {"Subject":"数据结构","ABType":ABType}
     for Type in range(len(TOTAL_NUM)):
-        print(Type)
+        #print(Type)
         dup_count = 0 #duplicate count
         content = []
-        num = TOTAL_NUM[i]
+        num = TOTAL_NUM[Type]
         for i in range(num):
 
             if Type == 0 or Type == 1:
@@ -51,53 +55,97 @@ def getpaper(threshold = None, cal_unit = None, essay_unit = None):
             r = random.random()+0.0001 #r:[0.0001,1.0001]
             if Type == 2:
                 unit = cal_unit[i]
+                qid = i+1
             else:
                 if Type == 3:
                     unit = essay_unit[i]
+                    qid = i+1
                 else:
                     unit = 0
+                    qid = 0
             if r < p :
-                content.append(qryDupQuestion(Type,unit))
+                content.append(qryDupQuestion(Type,unit,qid))
                 dup_count += 1
             else :
-                content.append(qryNewQuestion(Type,unit))
+                content.append(qryNewQuestion(Type,unit,qid))
+        if Type < 2 :
+            random.shuffle(content)
         paper[TYPE_LABEL[Type]] = content
 
-    if ABType == "A":
-        ABType = "B"
-    else:
-        ABType = "A"
-        CurrentTimestamp += 1
-    print(paper)
+    #print(paper)
+    paper = json.dumps(paper, ensure_ascii=False)
+    #print(paper)
     return paper
 
-def qryDupQuestion(Type,unit):
+def qryDupQuestion(Type,unit,qid):
 
     Q = Question.objects.all()
     for q in Q:
-        if unit != 0 and unit != q.Unit:
+        if unit != 0 and unit != int(q.Unit):
             continue
-        if Type != q.Type:
+        if Type != int(q.Type):
             continue
-        q.TimeStamp = CurrentTimestamp
+        if qid != int(q.QID):
+            continue
+        if int(q.TimeStamp) == CurrentTimestamp or not collapse(int(q.TimeStamp)):
+            continue
+        q.TimeStamp = str(CurrentTimestamp)
         q.save()
-        return q
+        return ModeltoJson(q)
+    return qryNaiveQuestion(Type,unit,qid)
 
-def qryNewQuestion(Type,unit):
+def qryNewQuestion(Type,unit,qid):
 
     Q = Question.objects.all()
     for q in Q:
-        if unit != 0 and unit != q.Unit:
+        if unit != 0 and unit != int(q.Unit):
             continue
-        if Type != q.Type:
+        if Type != int(q.Type):
             continue
-        if q.TimeStamp != CurrentTimestamp and q.TimeStamp > CurrentTimestamp - DUP_SPAN:
+        if qid != int(q.QID):
             continue
-        q.TimeStamp = CurrentTimestamp
+        if int(q.TimeStamp) == CurrentTimestamp or collapse(int(q.TimeStamp)):
+            continue
+        q.TimeStamp = str(CurrentTimestamp)
         q.save()
-        return q
+        return ModeltoJson(q)
+    return qryNaiveQuestion(Type,unit,qid)
 
-getpaper(0.4,[1,2,3,2],[1,2,3,3,5])
-getpaper(0.4,[1,2,3,2,3],[1,2,3,3,5])
-getpaper(0.4,[1,2,3,2],3)
+def qryNaiveQuestion(Type,unit,qid):
+
+    Q = Question.objects.all()
+    for q in Q:
+        if unit != 0 and unit != int(q.Unit):
+            continue
+        if Type != int(q.Type):
+            continue
+        if qid != int(q.QID):
+            continue
+        if int(q.TimeStamp) == CurrentTimestamp:
+            continue
+        q.TimeStamp = str(CurrentTimestamp)
+        q.save()
+        return ModeltoJson(q)
+    #print(Type,unit,qid,"###")
+
+def collapse(timestamp):
+    if ABType == "A":
+        return timestamp >= CurrentTimestamp - 2*DUP_SPAN
+    else:
+        return timestamp >= CurrentTimestamp - 2*DUP_SPAN - 1 and timestamp < CurrentTimestamp - 1
+
+def ModeltoJson(m):
+    if m.Type == "0":
+        return {"Question":m.Body,"ChoiceA":m.ChoiceA,"ChoiceB":m.ChoiceB,"ChoiceC":m.ChoiceC,"ChoiceD":m.ChoiceD,"Answer":m.Answer}
+    else:
+        return {"Question":m.Body,"Answer":m.Answer}
+
+def init():
+    Q = Question.objects.all()
+    for q in Q:
+        q.TimeStamp = "0"
+        q.save()
+'''
+init()
 getpaper()
+'''
