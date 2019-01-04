@@ -166,7 +166,7 @@ def init():
         q.save()
 
 
-#init()
+init()
 #getpaper()
 
 #print(getBody("2"))
