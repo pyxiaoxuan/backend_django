@@ -116,7 +116,7 @@ def addCalculationQ(Cell,Json):
     for Text in Json['Calculation']:
         addPoint(Cell)
         Para=Cell.add_paragraph(str(i)+'.'+Text['Question'])
-        for j in range(0,5)
+        for j in range(0,5):
             Para=Cell.add_paragraph()
         i+=1
     
@@ -133,7 +133,7 @@ def addEssayQ(Cell,Json):
     for Text in Json['Essay']:
         addPoint(Cell)
         Para=Cell.add_paragraph(str(i)+'.'+Text['Question'])
-        for j in range(0,10)
+        for j in range(0,10):
             Para=Cell.add_paragraph()
         i+=1
     
@@ -195,7 +195,7 @@ def addEssayA(Cell,Json):
         Para=Cell.add_paragraph(str(i)+'.'+Text['Answer'])
         i+=1
 #调用自带的库
-def genPaper(_Name='试卷.docx'):      #试卷生成
+def genPaper(_Name='试卷.docx',Json={}):      #试卷生成
     Doc=Document('模板.docx')
     '''
     #标题 
@@ -222,12 +222,12 @@ def genPaper(_Name='试卷.docx'):      #试卷生成
     #整张卷子
     #卷头
     Table=Doc.tables[0]
-    Json={"Date":"2016-7-8","Type":"A", "Subject":"数据结构","Choice":[  {"Question":"bala","ChoiceA": "bala","ChoiceB": "bala","ChoiceC": "bala", "ChoiceD": "bala" }],   "Completion":[ {"Question":"bala","Answer":"bala" } ],  "Calculation":[  { "Question":"bala",  "Answer":"bala"        }  ]}
+    #Json={"Date":"2016/7/8","Type":"A", "Subject":"数据结构","Choice":[  {"Question":"bala","ChoiceA": "bala","ChoiceB": "bala","ChoiceC": "bala", "ChoiceD": "bala" }],   "Completion":[ {"Question":"bala","Answer":"bala" } ],  "Calculation":[  { "Question":"bala",  "Answer":"bala"        }  ]}
     Para=Table.cell(0,0).paragraphs[0]
     Para.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
     N2C=["〇","一","二","三","四","五","六","七","八","九"]
-    Date=Json['Date'].split('-')
+    Date=Json['Date'].split('/')
     ToYear=int(Date[0])
     ToMonth=int(Date[1])
     ToDay=int(Date[2])
@@ -273,23 +273,14 @@ def genPaper(_Name='试卷.docx'):      #试卷生成
     #todo
 
     Doc.save(_Name)
-def genAnswer(_Name='答案.docx'):     #答案生成
+def genAnswer(_Name='答案.docx',Json={}):     #答案生成
     Doc=Document('答案模板.docx')
 
     #卷头
     Table=Doc.tables[0]
-    Json={"Date":"2016-7-8","Type":"A", "Subject":"数据结构","Choice":[  {"Question":"bala","ChoiceA": "bala","ChoiceB": "bala","ChoiceC": "bala", "ChoiceD": "bala" ,
-        "Answer":"bala"}],   "Completion":[ {"Question":"bala","Answer":"bala" } ],  "Calculation":[  { "Question":"bala",  "Answer":"bala"        }  ],
 
-     "Essay":[                   
-     {
-        "Question":"bala",
-        "Answer":"bala"        
-     }
-
-     ]}
     N2C=["〇","一","二","三","四","五","六","七","八","九"]
-    Date=Json['Date'].split('-')
+    Date=Json['Date'].split('/')
     ToYear=int(Date[0])
     ToMonth=int(Date[1])
     ToDay=int(Date[2])
@@ -340,7 +331,7 @@ def genAnswer(_Name='答案.docx'):     #答案生成
     #todo
     Doc.save(_Name)
 #genPaper()
-genAnswer()
+#genAnswer()
 
 '''                                                 #大杀器 调用默认word软件
 import win32com

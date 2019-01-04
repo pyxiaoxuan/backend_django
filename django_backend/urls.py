@@ -26,4 +26,8 @@ urlpatterns = [
     url(r'^manifest.json$',backend_django.views.manifest),
     url(r'^asset-manifest.json$',backend_django.views.asset_manifest),
     url(r'^request/choice$',backend_django.views.getChoicePost),
+    url(r'^request/blank$',backend_django.views.getCompletionPost),
+    url(r'^request/calculate$',backend_django.views.getCalculationPost),
+    url(r'^request/shortanswer$',backend_django.views.getEssayPost),
+    url(r'^request/make$',backend_django.views.getMakePost),
 ]

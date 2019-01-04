@@ -8,6 +8,6 @@
     "\\backend_django\\templates",
     "\\django_backend"
   ],
-  "SelectedNode": "\\backend_django\\templates\\index.html",
+  "SelectedNode": "\\backend_django\\views.py",
   "PreviewInSolutionExplorer": false
 }

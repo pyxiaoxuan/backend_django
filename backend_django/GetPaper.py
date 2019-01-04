@@ -1,5 +1,4 @@
-from .SqlModule import addSql,modSql,delSql
-from __future__ import division
+from SqlModule import addSql,modSql,delSql
 import random
 timestamp = 0
 
