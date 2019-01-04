@@ -146,6 +146,7 @@ def cut(str):
     return str[:CUT_LENGTH]
 
 def getBody(Type):
+    Type = int(Type)
     Q = Question.objects.all()
     Json = []
     for q in Q:
@@ -165,5 +166,5 @@ def init():
 '''
 init()
 getpaper()
-getBody(2)
+getBody("2")
 '''
