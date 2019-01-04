@@ -1,6 +1,4 @@
-import sys,os
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(os.path.join(BASE_DIR+'\\backend_django'))
+from django.db import models
 from backend_django.models import Question
 
 #from .SqlModule import addSql,modSql,delSql
