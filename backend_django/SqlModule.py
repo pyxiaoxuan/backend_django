@@ -7,9 +7,13 @@ def addSql(_QID,_Body,_Type,_Unit,_TimeStamp,_Answer,_ChoiceA='NULL',_ChoiceB='N
     Q = Question(QID=_QID,Body=_Body,Type=_Type,Unit=_Unit,TimeStamp=_TimeStamp,Answer=_Answer,ChoiceA=_ChoiceA,ChoiceB=_ChoiceB,ChoiceC=_ChoiceC,ChoiceD=_ChoiceD)
     Q.save()
 
-def delSql(_QID):                           #删
-    Q = Question.objects.get(QID=_QID)
-    Q.delete()
+def delSql(_id):                           #删
+    try:
+        Q = Question.objects.get(id=_id)
+    except Question.DoesNotExist:
+        Q = None
+    if Q is not None:
+        Q.delete()
 
 def modSql(_QID,_Body,_Type,_Unit,_TimeStamp,_Answer,_ChoiceA='',_ChoiceB='',_ChoiceC='',_ChoiceD=''):  #改
     Q = Question.objects.get(QID=_QID)
@@ -24,11 +28,22 @@ def modSql(_QID,_Body,_Type,_Unit,_TimeStamp,_Answer,_ChoiceA='',_ChoiceB='',_Ch
     Q.ChoiceD=_ChoiceD
     Q.save()
 
-def srhSql(_QID=-1):                             #查
-    if _QID==-1:                                #若缺省则随机查找
-        return Question.objects.get(random.randint(0,Question.objects.count()))
+def srhSql(_id=-1):                             #查
+    if _id==-1:                                #若缺省则随机查找
+        try:
+            return Question.objects.get(id=str(random.randint(0,Question.objects.count())))
+        except Question.DoesNotExist:
+            return None
     else:                                       #否则按照Id查找
-        return Question.objects.get(QID=_QID)
+        try:
+            return Question.objects.get(id=_id)
+        except Question.DoesNotExist:
+            return None
+'''
+print(srhSql("3"))
+delSql("3")
+print(srhSql("3"))
+'''
 
 
 
