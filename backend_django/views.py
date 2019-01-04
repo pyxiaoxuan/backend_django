@@ -1,8 +1,10 @@
-from django.shortcuts import render,HttpResponse,HttpResponseRedirect
+from django.shortcuts import render,HttpResponse
 import json
 import sys,os
 import SqlModule 
 import GetPaper
+import DocModule
+import time
 # Create your views here.
 def home(request):
     return render(
@@ -68,9 +70,130 @@ def getMakePost(request):
         Calculation=request.POST.get('calculation')
         Essay=request.POST.get('shortanswer')
         Date=request.POST.get('date')
-        #print(Date)
+        print(Repetition,Calculation,Essay)
         if Subject!='数据结构':
             return HttpResponse('404')
         Json=GetPaper.getpaper(Repetition,Calculation,Essay)
-        Json['Date']=Date
-    return HttpResponse('123.docx')
+        DocModule.genPaper(time.strftime('%Y-%m-%d',time.localtime(time.time()))+'paper.docx',Json,Date)
+        DocModule.genAnswer(time.strftime('%Y-%m-%d',time.localtime(time.time()))+'answer.docx',Json,Date)
+    return HttpResponse('114514')
+
+def getDocGet(request):
+    List=os.listdir('%s\\backend_django\\assets'%(sys.path[0]))
+    Time=[]
+    for each in List:
+        if(each.count('paper.docx')>=1):
+            Time.append(each)
+    time=Time[2]
+    file=open('%s\\backend_django\\assets\\%s'%(sys.path[0],time),'rb')  
+    response =HttpResponse(file)  
+    response['Content-Type']='application/octet-stream'  
+    response['Content-Disposition']='attachment;filename="%s"'%time 
+    return response
+
+def getAnsGet(request):
+    List=os.listdir('%s\\backend_django\\assets'%(sys.path[0]))
+    Time=[]
+    for each in List:
+        if(each.count('answer.docx')>=1):
+            Time.append(each)
+    time=Time[2]
+    file=open('%s\\backend_django\\assets\\%s'%(sys.path[0],time),'rb')  
+    response =HttpResponse(file)  
+    response['Content-Type']='application/octet-stream'  
+    response['Content-Disposition']='attachment;filename="%s"'%time 
+    return response
+
+def getQ1Get(request):
+    List=os.listdir('%s\\backend_django\\assets'%(sys.path[0]))
+    Time=[]
+    for each in List:
+        if(each.count('paper.docx')>=1):
+            Time.append(each)
+    time=Time[2]
+    file=open('%s\\backend_django\\assets\\%s'%(sys.path[0],time),'rb')  
+    response =HttpResponse(file)  
+    response['Content-Type']='application/octet-stream'  
+    response['Content-Disposition']='attachment;filename="%s"'%time 
+    return response
+
+def getQ2Get(request):
+    List=os.listdir('%s\\backend_django\\assets'%(sys.path[0]))
+    Time=[]
+    for each in List:
+        if(each.count('paper.docx')>=1):
+            Time.append(each)
+    time=Time[1]
+    file=open('%s\\backend_django\\assets\\%s'%(sys.path[0],time),'rb')  
+    response =HttpResponse(file)  
+    response['Content-Type']='application/octet-stream'  
+    response['Content-Disposition']='attachment;filename="%s"'%time 
+    return response
+
+def getQ3Get(request):
+    List=os.listdir('%s\\backend_django\\assets'%(sys.path[0]))
+    Time=[]
+    for each in List:
+        if(each.count('paper.docx')>=1):
+            Time.append(each)
+    time=Time[0]
+    file=open('%s\\backend_django\\assets\\%s'%(sys.path[0],time),'rb')  
+    response =HttpResponse(file)  
+    response['Content-Type']='application/octet-stream'  
+    response['Content-Disposition']='attachment;filename="%s"'%time 
+    return response
+
+def getA1Get(request):
+    List=os.listdir('%s\\backend_django\\assets'%(sys.path[0]))
+    Time=[]
+    for each in List:
+        if(each.count('answer.docx')>=1):
+            Time.append(each)
+    time=Time[2]
+    file=open('%s\\backend_django\\assets\\%s'%(sys.path[0],time),'rb')  
+    response =HttpResponse(file)  
+    response['Content-Type']='application/octet-stream'  
+    response['Content-Disposition']='attachment;filename="%s"'%time  
+    return response
+
+def getA2Get(request):
+    List=os.listdir('%s\\backend_django\\assets'%(sys.path[0]))
+    Time=[]
+    for each in List:
+        if(each.count('answer.docx')>=1):
+            Time.append(each)
+    time=Time[1]
+    file=open('%s\\backend_django\\assets\\%s'%(sys.path[0],time),'rb')  
+    response =HttpResponse(file)  
+    response['Content-Type']='application/octet-stream'  
+    response['Content-Disposition']='attachment;filename="%s"'%time 
+    return response
+
+def getA3Get(request):
+    List=os.listdir('%s\\backend_django\\assets'%(sys.path[0]))
+    Time=[]
+    for each in List:
+        if(each.count('answer.docx')>=1):
+            Time.append(each)
+    time=Time[0]
+    file=open('%s\\backend_django\\assets\\%s'%(sys.path[0],time),'rb')  
+    response =HttpResponse(file)  
+    response['Content-Type']='application/octet-stream'  
+    response['Content-Disposition']='attachment;filename="%s"'%time 
+    return response
+
+def getTimePost(request):
+    List=os.listdir('%s\\backend_django\\assets'%(sys.path[0]))
+    Time=[]
+    for each in List:
+        if(each.count('paper.docx')>=1):
+            Time.append(each.strip('paper.docx'))
+    print(Time)
+    time={'time1':Time[2],'time2':Time[1],'time3':Time[0]}
+    return HttpResponse(json.dumps(time), content_type="application/json")
+
+def getChoiceBody(request):
+    
+    Json=GetPaper.getBody('0')
+    return HttpResponse(json.dumps(Json), content_type="application/json")
+

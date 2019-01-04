@@ -2,12 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\backend_django",
-    "\\backend_django\\assets",
     "\\backend_django\\static",
     "\\backend_django\\static\\js",
     "\\backend_django\\templates",
     "\\django_backend"
   ],
-  "SelectedNode": "\\backend_django\\views.py",
+  "SelectedNode": "\\manage.py",
   "PreviewInSolutionExplorer": false
 }

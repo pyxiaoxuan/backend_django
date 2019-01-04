@@ -26,6 +26,11 @@
       "type": "native",
       "name": "manage.py(2)",
       "project": "manage.py"
+    },
+    {
+      "type": "native",
+      "name": "manage.py(3)",
+      "project": "manage.py"
     }
   ]
 }

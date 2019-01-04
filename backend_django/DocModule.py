@@ -3,7 +3,7 @@ from docx.shared import Inches,Pt,Cm
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_TABLE_ALIGNMENT,WD_ALIGN_VERTICAL
 from docx.oxml.ns import qn
-import json
+import json,sys
 '''
 json:
 {
@@ -79,7 +79,9 @@ def addChoiceQ(Cell,Json):                                                  #选
     Run=Para.add_run('(本大题共10题，每小题2分，共计20分)')
     addPoint(Cell)
     i=1
+    #print(Json['Choice'])
     for Text in Json['Choice']:
+        
         Para=Cell.add_paragraph(str(i)+'.'+Text['Question'])
         Para=Cell.add_paragraph('A.'+Text['ChoiceA'])
         Para=Cell.add_paragraph('B.'+Text['ChoiceB'])
@@ -106,7 +108,7 @@ def addCompletionQ(Cell,Json):                                                #�
 
 def addCalculationQ(Cell,Json):
     Para=Cell.add_paragraph()
-    Run=Para.add_run('三.计算题 ')
+    Run=Para.add_run('三.简答题 ')
     Run.font.name=u'黑体'
     Run.font.size=Pt(13)
     Run.element.rPr.rFonts.set(qn('w:eastAsia'), u'黑体')
@@ -123,7 +125,7 @@ def addCalculationQ(Cell,Json):
 
 def addEssayQ(Cell,Json):
     Para=Cell.add_paragraph()
-    Run=Para.add_run('四.问答题 ')
+    Run=Para.add_run('四.编程题 ')
     Run.font.name=u'黑体'
     Run.font.size=Pt(13)
     Run.element.rPr.rFonts.set(qn('w:eastAsia'), u'黑体')
@@ -170,7 +172,7 @@ def addCompletionA(Cell,Json):
 
 def addCalculationA(Cell,Json):
     Para=Cell.add_paragraph()
-    Run=Para.add_run('三.计算题 ')
+    Run=Para.add_run('三.简答题 ')
     Run.font.name=u'黑体'
     Run.font.size=Pt(13)
     Run.element.rPr.rFonts.set(qn('w:eastAsia'), u'黑体')
@@ -184,7 +186,7 @@ def addCalculationA(Cell,Json):
 
 def addEssayA(Cell,Json):
     Para=Cell.add_paragraph()
-    Run=Para.add_run('四.问答题 ')
+    Run=Para.add_run('四.编程题 ')
     Run.font.name=u'黑体'
     Run.font.size=Pt(13)
     Run.element.rPr.rFonts.set(qn('w:eastAsia'), u'黑体')
@@ -195,8 +197,8 @@ def addEssayA(Cell,Json):
         Para=Cell.add_paragraph(str(i)+'.'+Text['Answer'])
         i+=1
 #调用自带的库
-def genPaper(_Name='试卷.docx',Json={}):      #试卷生成
-    Doc=Document('模板.docx')
+def genPaper(_Name='试卷.docx',Json={},_Date='0/0/0'):      #试卷生成
+    Doc=Document('%s\\backend_django\\paper.docx'%sys.path[0])
     '''
     #标题 
     Title=Doc.paragraphs[0]   
@@ -227,7 +229,7 @@ def genPaper(_Name='试卷.docx',Json={}):      #试卷生成
     Para.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
     N2C=["〇","一","二","三","四","五","六","七","八","九"]
-    Date=Json['Date'].split('/')
+    Date=_Date.split('/')
     ToYear=int(Date[0])
     ToMonth=int(Date[1])
     ToDay=int(Date[2])
@@ -257,30 +259,28 @@ def genPaper(_Name='试卷.docx',Json={}):      #试卷生成
     Run.bold=True
 
     Para=Table.cell(0,0).paragraphs[1]   
-    Type=Json['Type']
+    Type=Json['ABType']
     Run=Para.add_run('考试日期：%d年%d月%d日     试卷类型：%s       试卷代号：'%(ToYear,ToMonth,ToDay,Type))
     Run.font.size=Pt(10.5) 
     Run.font.name=u'宋体'
     Run.element.rPr.rFonts.set(qn('w:eastAsia'), '宋体')
     Run.bold=False
 
- 
+    #print(Json)
     #添加题目
     addChoiceQ(Table.cell(4,0),Json)
     addCompletionQ(Table.cell(4,0),Json)
     addCalculationQ(Table.cell(4,0),Json)
     addEssayQ(Table.cell(4,0),Json)
     #todo
-
     Doc.save(_Name)
-def genAnswer(_Name='答案.docx',Json={}):     #答案生成
-    Doc=Document('答案模板.docx')
-
+def genAnswer(_Name='答案.docx',Json={},_Date='0/0/0'):     #答案生成
+    Doc=Document('%s\\backend_django\\answer.docx'%sys.path[0])
     #卷头
     Table=Doc.tables[0]
 
     N2C=["〇","一","二","三","四","五","六","七","八","九"]
-    Date=Json['Date'].split('/')
+    Date=_Date.split('/')
     ToYear=int(Date[0])
     ToMonth=int(Date[1])
     ToDay=int(Date[2])
@@ -317,7 +317,7 @@ def genAnswer(_Name='答案.docx',Json={}):     #答案生成
     Run.element.rPr.rFonts.set(qn('w:eastAsia'), '楷体')
     Run.bold=True
 
-    Type=Json['Type']
+    Type=Json['ABType']
     Para=Table.cell(0,0).paragraphs[2]
     Run=Para.add_run('命题教师：                 试卷类型：%s       试卷代号：'%(Type))
     Run.font.size=Pt(13)
@@ -329,6 +329,7 @@ def genAnswer(_Name='答案.docx',Json={}):     #答案生成
     addCalculationA(Table.cell(1,0),Json)
     addEssayA(Table.cell(1,0),Json)
     #todo
+    print(_Name)
     Doc.save(_Name)
 #genPaper()
 #genAnswer()
