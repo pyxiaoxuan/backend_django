@@ -78,6 +78,7 @@ def getpaper(threshold = None, cal_unit = None, essay_unit = None):
 def qryDupQuestion(Type,unit,qid):
     
     Q = Question.objects.all()
+    tq = []
     for q in Q:
         if unit != 0 and unit != int(q.Unit):
             continue
@@ -87,14 +88,21 @@ def qryDupQuestion(Type,unit,qid):
             continue
         if int(q.TimeStamp) == CurrentTimestamp or not collapse(int(q.TimeStamp)):
             continue
+        tq.append(q)
+    
+    if tq:
+        random.shuffle(tq)
+        q = tq[0]
         q.TimeStamp = str(CurrentTimestamp)
         q.save()
         return ModeltoJson(q)
-    return qryNaiveQuestion(Type,unit,qid)
+    else:
+        return qryNaiveQuestion(Type,unit,qid)
 
 def qryNewQuestion(Type,unit,qid):
 
     Q = Question.objects.all()
+    tq = []
     for q in Q:
         if unit != 0 and unit != int(q.Unit):
             continue
@@ -104,10 +112,18 @@ def qryNewQuestion(Type,unit,qid):
             continue
         if int(q.TimeStamp) == CurrentTimestamp or collapse(int(q.TimeStamp)):
             continue
+        tq.append(q)
+    
+    if tq:
+        random.shuffle(tq)
+        q = tq[0]
         q.TimeStamp = str(CurrentTimestamp)
         q.save()
         return ModeltoJson(q)
-    return qryNaiveQuestion(Type,unit,qid)
+    else:
+        return qryNaiveQuestion(Type,unit,qid)
+
+        
 
 def qryNaiveQuestion(Type,unit,qid):
 
@@ -167,6 +183,6 @@ def init():
 
 
 init()
-#getpaper()
+#print(getpaper())
 
 #print(getBody("2"))
